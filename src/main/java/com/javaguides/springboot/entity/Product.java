@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -16,8 +13,12 @@ import javax.persistence.Id;
 public class Product {
     @Id
     @GeneratedValue
-    @Column(name = "ID")
-    private Long id;
+    @Column(name = "PRODUCT_ID")
+    private Long productId;
+
+    @ManyToOne(targetEntity = Supplier.class)
+    @JoinColumn(name = "SUPPLIER_ID",referencedColumnName = "SUPPLIER_ID")
+    private Supplier supplier;
 
     @Column(name = "PRODUCT_NAME",nullable = false)
     private String productName;

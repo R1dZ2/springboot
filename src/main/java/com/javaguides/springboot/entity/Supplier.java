@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +14,25 @@ import javax.persistence.Id;
 public class Supplier {
     @Id
     @GeneratedValue
-    @Column(name = "ID")
-    private Long id;
+    @Column(name = "SUPPLIER_ID")
+    private Long supplierId;
+
+    @Id
+    @Column(name = "SUPPLIER_NAME")
+    private String supplierName;
+
+    @Id
+    @Column(name = "SUPPLIER_ADDRESS")
+    private String supplierAddress;
+
+    @Id
+    @Column(name = "SUPPLIER_TELEPHONE_NUMBER")
+    private int supplierTelephoneNumber;
+
+    @Column(name = "SUPPLIER_EMAIL_ADDRESS")
+    private String supplierEmailAddress;
+
+    @OneToMany(mappedBy = "supplier",fetch = FetchType.LAZY)
+    List<Product> products;
+
 }
