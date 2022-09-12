@@ -1,5 +1,6 @@
 package com.javaguides.springboot.controller;
 
+import com.javaguides.springboot.dto.ProductDto;
 import com.javaguides.springboot.entity.Product;
 import com.javaguides.springboot.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @RestController
@@ -21,9 +23,14 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    @GetMapping("id/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
         return new ResponseEntity<>(productService.findProductById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("product-name/{productName}")
+    public ResponseEntity<List<ProductDto>> getProductByName(@PathVariable String name) {
+        return new ResponseEntity<>(productService.findProductByName(name), HttpStatus.OK);
     }
 
     @PostMapping(value = "save")

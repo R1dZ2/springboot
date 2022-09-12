@@ -1,5 +1,7 @@
 package com.javaguides.springboot.controller;
 
+import com.javaguides.springboot.dto.SupplierDto;
+import com.javaguides.springboot.entity.Product;
 import com.javaguides.springboot.entity.Supplier;
 import com.javaguides.springboot.service.SupplierService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 10000)
-@RequestMapping("/supplier")
+@RequestMapping("/suppliers")
 public class SupplierController {
 
     private final SupplierService supplierService;
@@ -23,8 +25,28 @@ public class SupplierController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Supplier> getSupplierById(@PathVariable Long id) {
+    public ResponseEntity<SupplierDto> getSupplierById(@PathVariable Long id) {
         return new ResponseEntity<>(supplierService.findSupplierById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("supplier-name/{name}")
+    public ResponseEntity<Supplier> getSupplierByName(@PathVariable String name) {
+        return new ResponseEntity(supplierService.findSupplierByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping("supplier-name-telephone/{name}/{telephoneNumber}")
+    public ResponseEntity<List<Supplier>> getSupplierByNameAndTelephone(@PathVariable String name,@PathVariable int telephoneNumber) {
+        return new ResponseEntity(supplierService.findSupplierByNameAndTelephoneNumber(name, telephoneNumber), HttpStatus.OK);
+    }
+
+    @GetMapping("supplier-name-contains/{name}")
+    public ResponseEntity<List<Supplier>> getSupplierByNameContains(@PathVariable String name) {
+        return new ResponseEntity<>(supplierService.findSupplierByNameContains(name), HttpStatus.OK);
+    }
+
+    @GetMapping("supplier-email/{emailAddress}")
+    public ResponseEntity<List<Supplier>> getSupplierByEmailAddress(@PathVariable String emailAddress){
+        return new ResponseEntity<>(supplierService.findSupplierByEmailAddress(emailAddress),HttpStatus.OK);
     }
 
     @PostMapping(value = "save")

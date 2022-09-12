@@ -1,0 +1,3 @@
+Entity and DTO:
+Entity is never sent to the Frontend and an Entity is never sent from the Frontend to the Backend.
+DTO is thus used instead to limit the amount of data being send to the Frontend. We can manipulate the data and send it to the Frontend via a DTO.

@@ -13,15 +13,15 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue
-    @Column(name = "PRODUCT_ID")
-    private Long productId;
+    @Column(name = "ID")
+    private Long id;
 
     @ManyToOne(targetEntity = Supplier.class)
-    @JoinColumn(name = "SUPPLIER_ID",referencedColumnName = "SUPPLIER_ID")
+    @JoinColumn(name = "SUPPLIER_ID", referencedColumnName = "ID", nullable = false)
     private Supplier supplier;
 
-    @Column(name = "PRODUCT_NAME",nullable = false)
-    private String productName;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
     @Column(name = "DESCRIPTION")
     private String description;

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,25 +13,18 @@ import java.util.List;
 public class Supplier {
     @Id
     @GeneratedValue
-    @Column(name = "SUPPLIER_ID")
-    private Long supplierId;
+    @Column(name = "ID")
+    private Long id;
 
-    @Id
-    @Column(name = "SUPPLIER_NAME")
-    private String supplierName;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
-    @Id
-    @Column(name = "SUPPLIER_ADDRESS")
-    private String supplierAddress;
+    @Column(name = "ADDRESS")
+    private String address;
 
-    @Id
-    @Column(name = "SUPPLIER_TELEPHONE_NUMBER")
-    private int supplierTelephoneNumber;
+    @Column(name = "TELEPHONE_NUMBER", nullable = false)
+    private int telephoneNumber;
 
-    @Column(name = "SUPPLIER_EMAIL_ADDRESS")
-    private String supplierEmailAddress;
-
-    @OneToMany(mappedBy = "supplier",fetch = FetchType.LAZY)
-    List<Product> products;
-
+    @Column(name = "EMAIL_ADDRESS", nullable = false)
+    private String emailAddress;
 }
