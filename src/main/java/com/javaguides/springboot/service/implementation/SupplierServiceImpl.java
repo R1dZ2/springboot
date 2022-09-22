@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,25 +18,40 @@ public class SupplierServiceImpl implements SupplierService {
     private final SupplierRepository supplierRepository;
 
     @Override
-    public List<Supplier> getAllSupplier() {
-        return supplierRepository.findAll();
+    public List<SupplierDto> getAllSupplier() {
+        return supplierRepository.findAll().stream().map(supplier -> {
+            SupplierDto supplierDto = new SupplierDto();
+            supplierDto.setId(supplier.getId());
+            supplierDto.setName(supplier.getName());
+            supplierDto.setTelephoneNumber(supplier.getTelephoneNumber());
+            supplierDto.setAddress(supplier.getAddress());
+            supplierDto.setEmailAddress(supplier.getEmailAddress());
+            return supplierDto;
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public void saveSupplier(Supplier supplier) {
-        supplierRepository.save(supplier);
+    public void saveSupplier(SupplierDto supplierDto) {
+        if (Objects.nonNull(supplierDto)) {
+            Supplier supplier = new Supplier();
+            supplier.setName(supplierDto.getName());
+            supplier.setAddress(supplierDto.getAddress());
+            supplier.setTelephoneNumber(supplierDto.getTelephoneNumber());
+            supplier.setEmailAddress(supplierDto.getEmailAddress());
+            supplierRepository.save(supplier);
+        }
     }
 
     @Override
-    public void updateSupplier(Long id, Supplier supplier) {
-        Optional<Supplier> optionalSupplier = supplierRepository.findById(id);
-        optionalSupplier.ifPresent(supplierEntity -> {
-            supplierEntity.setName(supplier.getName());
-            supplierEntity.setAddress(supplier.getAddress());
-            supplierEntity.setEmailAddress(supplier.getEmailAddress());
-            supplierEntity.setTelephoneNumber(supplier.getTelephoneNumber());
-            supplierRepository.save(supplierEntity);
-        });
+    public void updateSupplier(Long id, SupplierDto supplierDto) {
+        Supplier supplier = supplierRepository.findById(id).orElse(null);
+        if (Objects.nonNull(supplier)) {
+            supplier.setName(supplierDto.getName());
+            supplier.setAddress(supplierDto.getAddress());
+            supplier.setEmailAddress(supplierDto.getEmailAddress());
+            supplier.setTelephoneNumber(supplierDto.getTelephoneNumber());
+            supplierRepository.save(supplier);
+        }
     }
 
     @Override
@@ -70,24 +86,24 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public Supplier findSupplierByName(String name) {
+    public SupplierDto findSupplierByName(String name) {
         return supplierRepository.findSupplierByName(name).orElse(null);
     }
 
     @Override
-    public Supplier findSupplierByNameAndTelephoneNumber(String name, int telephoneNumber) {
+    public SupplierDto findSupplierByNameAndTelephoneNumber(String name, int telephoneNumber) {
         return supplierRepository.findSupplierByNameAndTelephoneNumber(name, telephoneNumber).orElse(null);
     }
 
     @Override
-    public List<Supplier> findSupplierByNameContains(String name) {
-        List<Supplier> supplierList = supplierRepository.findSupplierByNameContains(name);
+    public List<SupplierDto> findSupplierByNameContains(String name) {
+        List<SupplierDto> supplierList = supplierRepository.findSupplierByNameContains(name);
         return supplierList;
     }
 
     @Override
-    public List<Supplier> findSupplierByEmailAddress(String emailAddress) {
-        List<Supplier> supplierList = supplierRepository.findSupplierByEmailAddressContains(emailAddress);
+    public List<SupplierDto> findSupplierByEmailAddress(String emailAddress) {
+        List<SupplierDto> supplierList = supplierRepository.findSupplierByEmailAddressContains(emailAddress);
         return supplierList;
     }
 

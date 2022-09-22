@@ -1,14 +1,12 @@
 package com.javaguides.springboot.controller;
 
 import com.javaguides.springboot.dto.ProductDto;
-import com.javaguides.springboot.entity.Product;
 import com.javaguides.springboot.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @RestController
@@ -19,7 +17,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping(value = "all")
-    public List<Product> getProducts(){
+    public List<ProductDto> getProducts(){
         return productService.getAllProducts();
     }
 
@@ -34,14 +32,14 @@ public class ProductController {
     }
 
     @PostMapping(value = "save")
-    public String saveProduct(@RequestBody Product product) {
-        productService.saveProduct(product);
+    public String saveProduct(@RequestBody ProductDto productDto) {
+        productService.saveProduct(productDto);
         return "Saved...";
     }
 
     @PutMapping(value = "update/{id}")
-    public String updateProduct(@PathVariable long id, @RequestBody Product product){
-        productService.updateProduct(id,product);
+    public String updateProduct(@PathVariable long id, @RequestBody ProductDto productDto){
+        productService.updateProduct(id,productDto);
         return "Updated...";
     }
 

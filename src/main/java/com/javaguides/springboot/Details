@@ -1,3 +1,10 @@
 Entity and DTO:
 Entity is never sent to the Frontend and an Entity is never sent from the Frontend to the Backend.
 DTO is thus used instead to limit the amount of data being send to the Frontend. We can manipulate the data and send it to the Frontend via a DTO.
+
+
+You need to implement something that will enable to track the the product's quantity, price and expiry date.
+You have the choice of deciding where to put these fields either you create a new entity or you put them in an existing entity. (One of them is wrong).
+After that you will need to create a whole mechanism (controller, service, repository etc.) to enable the stock update and the sale of products.
+E.g. Current quantity in stock for Fanta: 5. A user must be able to sell 3 bottles of Fanta and the quanity in stock needs to decrease from 5 to 2.
+Similarly if a user performs an update in stock (add 2 bottles of fanta) then the quantity in stock for fanta will increase from 2 to 4.

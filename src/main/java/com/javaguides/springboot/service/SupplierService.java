@@ -1,29 +1,28 @@
 package com.javaguides.springboot.service;
 
 import com.javaguides.springboot.dto.SupplierDto;
-import com.javaguides.springboot.entity.Supplier;
 
 import java.util.List;
 
 public interface SupplierService {
 
-    List<Supplier> getAllSupplier();
+    List<SupplierDto> getAllSupplier();
 
-    void saveSupplier(Supplier supplier);
+    void saveSupplier(SupplierDto supplierDto);
 
-    void updateSupplier(Long id, Supplier supplier);
+    void updateSupplier(Long id, SupplierDto supplierDto);
 
     void deleteSupplier(Long id);
 
     SupplierDto findSupplierById(Long id);
 
-    Supplier findSupplierByName(String name);
+    SupplierDto findSupplierByName(String name);
 
-    Supplier findSupplierByNameAndTelephoneNumber(String name, int telephoneNumber);
+    SupplierDto findSupplierByNameAndTelephoneNumber(String name, int telephoneNumber);
 
-    List<Supplier> findSupplierByNameContains(String supplierName);
+    List<SupplierDto> findSupplierByNameContains(String supplierName);
 
-    List<Supplier> findSupplierByEmailAddress(String emailAddress);
+    List<SupplierDto> findSupplierByEmailAddress(String emailAddress);
 
 
 }

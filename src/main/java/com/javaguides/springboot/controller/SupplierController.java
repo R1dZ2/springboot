@@ -1,8 +1,6 @@
 package com.javaguides.springboot.controller;
 
 import com.javaguides.springboot.dto.SupplierDto;
-import com.javaguides.springboot.entity.Product;
-import com.javaguides.springboot.entity.Supplier;
 import com.javaguides.springboot.service.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +18,7 @@ public class SupplierController {
     private final SupplierService supplierService;
 
     @GetMapping(value = "all")
-    public List<Supplier> getSupplier(){
+    public List<SupplierDto> getSupplier(){
         return supplierService.getAllSupplier();
     }
 
@@ -30,34 +28,34 @@ public class SupplierController {
     }
 
     @GetMapping("supplier-name/{name}")
-    public ResponseEntity<Supplier> getSupplierByName(@PathVariable String name) {
+    public ResponseEntity<SupplierDto> getSupplierByName(@PathVariable String name) {
         return new ResponseEntity(supplierService.findSupplierByName(name), HttpStatus.OK);
     }
 
     @GetMapping("supplier-name-telephone/{name}/{telephoneNumber}")
-    public ResponseEntity<List<Supplier>> getSupplierByNameAndTelephone(@PathVariable String name,@PathVariable int telephoneNumber) {
+    public ResponseEntity<List<SupplierDto>> getSupplierByNameAndTelephone(@PathVariable String name,@PathVariable int telephoneNumber) {
         return new ResponseEntity(supplierService.findSupplierByNameAndTelephoneNumber(name, telephoneNumber), HttpStatus.OK);
     }
 
     @GetMapping("supplier-name-contains/{name}")
-    public ResponseEntity<List<Supplier>> getSupplierByNameContains(@PathVariable String name) {
+    public ResponseEntity<List<SupplierDto>> getSupplierByNameContains(@PathVariable String name) {
         return new ResponseEntity<>(supplierService.findSupplierByNameContains(name), HttpStatus.OK);
     }
 
     @GetMapping("supplier-email/{emailAddress}")
-    public ResponseEntity<List<Supplier>> getSupplierByEmailAddress(@PathVariable String emailAddress){
+    public ResponseEntity<List<SupplierDto>> getSupplierByEmailAddress(@PathVariable String emailAddress){
         return new ResponseEntity<>(supplierService.findSupplierByEmailAddress(emailAddress),HttpStatus.OK);
     }
 
     @PostMapping(value = "save")
-    public String saveSupplier(@RequestBody Supplier supplier) {
-        supplierService.saveSupplier(supplier);
+    public String saveSupplier(@RequestBody SupplierDto supplierDto) {
+        supplierService.saveSupplier(supplierDto);
         return "Saved...";
     }
 
     @PutMapping(value = "update/{id}")
-    public String updateSupplier(@PathVariable long id, @RequestBody Supplier supplier){
-        supplierService.updateSupplier(id,supplier);
+    public String updateSupplier(@PathVariable long id, @RequestBody SupplierDto supplierDto){
+        supplierService.updateSupplier(id,supplierDto);
         return "Updated...";
     }
 
