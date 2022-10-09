@@ -1,6 +1,7 @@
 package com.javaguides.springboot.service;
 
 import com.javaguides.springboot.dto.ProductDto;
+import com.javaguides.springboot.entity.Product;
 
 import java.util.List;
 
@@ -17,15 +18,9 @@ public interface ProductService {
 
     List<ProductDto> findProductByName(String name);
 
-    //        // An optional is a container object which may or may not contain null values.
-//        // This prevents us from getting null pointer if a value we are looking for is not present in the database.
-//    @Override
-//    public void updateProduct(Long id, Product product) {
-//        Optional<Product> optionalProduct = productRepository.findById(id);
-//        optionalProduct.ifPresent(productEntity -> {
-//            productEntity.setName(product.getName());
-//            productEntity.setDescription(product.getDescription());
-//            productRepository.save(productEntity);
-//        });
-//    }
+    List<ProductDto> findProductBySupplierName(String supplierName);
+
+    // An optional is a container object which may or may not contain null values.
+    // This prevents us from getting null pointer if a value we are looking for is not present in the database.
+
 }

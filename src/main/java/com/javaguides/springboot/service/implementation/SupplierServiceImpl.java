@@ -61,13 +61,6 @@ public class SupplierServiceImpl implements SupplierService {
             supplierRepository.delete(supplierEntity);
         });
     }
-/* Not Optional method
-    @Override
-    public void deleteSupplier(Long id) {
-        Supplier deleteSupplier = supplierRepository.findById(id).get();
-        supplierRepository.delete(deleteSupplier);
-    }
- */
 
     @Override
     public SupplierDto findSupplierById(Long id) {
@@ -87,25 +80,63 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public SupplierDto findSupplierByName(String name) {
-        return supplierRepository.findSupplierByName(name).orElse(null);
+        Supplier supplier = supplierRepository.findSupplierByName(name).orElse(null);
+        if (Objects.nonNull(supplier)) {
+            SupplierDto supplierDto = new SupplierDto();
+            supplierDto.setId(supplier.getId());
+            supplierDto.setName(supplier.getName());
+            supplierDto.setAddress(supplier.getAddress());
+            supplierDto.setTelephoneNumber(supplier.getTelephoneNumber());
+            supplierDto.setEmailAddress(supplier.getEmailAddress());
+            return supplierDto;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public SupplierDto findSupplierByNameAndTelephoneNumber(String name, int telephoneNumber) {
-        return supplierRepository.findSupplierByNameAndTelephoneNumber(name, telephoneNumber).orElse(null);
+        Supplier supplier = supplierRepository.findSupplierByNameAndTelephoneNumber(name, telephoneNumber).orElse(null);
+        if (Objects.nonNull(supplier)) {
+            SupplierDto supplierDto = new SupplierDto();
+            supplierDto.setId(supplier.getId());
+            supplierDto.setName(supplier.getName());
+            supplierDto.setAddress(supplier.getAddress());
+            supplierDto.setTelephoneNumber(supplier.getTelephoneNumber());
+            supplierDto.setEmailAddress(supplier.getEmailAddress());
+            return supplierDto;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public List<SupplierDto> findSupplierByNameContains(String name) {
-        List<SupplierDto> supplierList = supplierRepository.findSupplierByNameContains(name);
-        return supplierList;
-    }
+        List<Supplier> supplierList = supplierRepository.findSupplierByNameContains(name);
+        List<SupplierDto> supplierDtoList = supplierList.stream().map(supplier -> {
+            SupplierDto supplierDto = new SupplierDto();
+            supplierDto.setId(supplier.getId());
+            supplierDto.setName(supplier.getName());
+            supplierDto.setAddress(supplier.getAddress());
+            supplierDto.setTelephoneNumber(supplier.getTelephoneNumber());
+            supplierDto.setEmailAddress(supplier.getEmailAddress());
+            return supplierDto;
+        }).collect(Collectors.toList());
+        return supplierDtoList;
+}
 
     @Override
     public List<SupplierDto> findSupplierByEmailAddress(String emailAddress) {
-        List<SupplierDto> supplierList = supplierRepository.findSupplierByEmailAddressContains(emailAddress);
-        return supplierList;
+        List<Supplier> supplierList = supplierRepository.findSupplierByEmailAddressContains(emailAddress);
+        List<SupplierDto> supplierDtoList = supplierList.stream().map(supplier -> {
+            SupplierDto supplierDto = new SupplierDto();
+            supplierDto.setId(supplier.getId());
+            supplierDto.setName(supplier.getName());
+            supplierDto.setAddress(supplier.getAddress());
+            supplierDto.setTelephoneNumber(supplier.getTelephoneNumber());
+            supplierDto.setEmailAddress(supplier.getEmailAddress());
+            return supplierDto;
+        }).collect(Collectors.toList());
+        return supplierDtoList;
     }
-
-
 }

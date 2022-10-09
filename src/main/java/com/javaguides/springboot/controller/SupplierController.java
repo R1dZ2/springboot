@@ -18,7 +18,7 @@ public class SupplierController {
     private final SupplierService supplierService;
 
     @GetMapping(value = "all")
-    public List<SupplierDto> getSupplier(){
+    public List<SupplierDto> getSupplier() {
         return supplierService.getAllSupplier();
     }
 
@@ -33,7 +33,7 @@ public class SupplierController {
     }
 
     @GetMapping("supplier-name-telephone/{name}/{telephoneNumber}")
-    public ResponseEntity<List<SupplierDto>> getSupplierByNameAndTelephone(@PathVariable String name,@PathVariable int telephoneNumber) {
+    public ResponseEntity<List<SupplierDto>> getSupplierByNameAndTelephone(@PathVariable String name, @PathVariable int telephoneNumber) {
         return new ResponseEntity(supplierService.findSupplierByNameAndTelephoneNumber(name, telephoneNumber), HttpStatus.OK);
     }
 
@@ -43,8 +43,8 @@ public class SupplierController {
     }
 
     @GetMapping("supplier-email/{emailAddress}")
-    public ResponseEntity<List<SupplierDto>> getSupplierByEmailAddress(@PathVariable String emailAddress){
-        return new ResponseEntity<>(supplierService.findSupplierByEmailAddress(emailAddress),HttpStatus.OK);
+    public ResponseEntity<List<SupplierDto>> getSupplierByEmailAddress(@PathVariable String emailAddress) {
+        return new ResponseEntity<>(supplierService.findSupplierByEmailAddress(emailAddress), HttpStatus.OK);
     }
 
     @PostMapping(value = "save")
@@ -54,14 +54,14 @@ public class SupplierController {
     }
 
     @PutMapping(value = "update/{id}")
-    public String updateSupplier(@PathVariable long id, @RequestBody SupplierDto supplierDto){
-        supplierService.updateSupplier(id,supplierDto);
+    public String updateSupplier(@PathVariable long id, @RequestBody SupplierDto supplierDto) {
+        supplierService.updateSupplier(id, supplierDto);
         return "Updated...";
     }
 
     @DeleteMapping(value = "delete/{id}")
-    public String deleteSupplier(@PathVariable long id){
+    public String deleteSupplier(@PathVariable long id) {
         supplierService.deleteSupplier(id);
-        return "Delete product with the id: "+id;
+        return "Delete product with the id: " + id;
     }
 }

@@ -17,7 +17,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping(value = "all")
-    public List<ProductDto> getProducts(){
+    public List<ProductDto> getProducts() {
         return productService.getAllProducts();
     }
 
@@ -31,6 +31,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.findProductByName(name), HttpStatus.OK);
     }
 
+    @GetMapping("supplier-name/{supplierName}")
+    public ResponseEntity<List<ProductDto>> getProductBySupplierName(@PathVariable String name) {
+        return new ResponseEntity<>(productService.findProductBySupplierName(name), HttpStatus.OK);
+    }
+
     @PostMapping(value = "save")
     public String saveProduct(@RequestBody ProductDto productDto) {
         productService.saveProduct(productDto);
@@ -38,14 +43,14 @@ public class ProductController {
     }
 
     @PutMapping(value = "update/{id}")
-    public String updateProduct(@PathVariable long id, @RequestBody ProductDto productDto){
-        productService.updateProduct(id,productDto);
+    public String updateProduct(@PathVariable long id, @RequestBody ProductDto productDto) {
+        productService.updateProduct(id, productDto);
         return "Updated...";
     }
 
     @DeleteMapping(value = "delete/{id}")
-    public String deleteProduct(@PathVariable long id){
+    public String deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
-        return "Delete product with the id: "+id;
+        return "Delete product with the id: " + id;
     }
 }

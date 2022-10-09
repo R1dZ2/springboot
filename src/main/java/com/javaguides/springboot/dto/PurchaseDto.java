@@ -1,7 +1,7 @@
 package com.javaguides.springboot.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.javaguides.springboot.entity.Product;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +12,10 @@ import java.time.LocalDate;
 @Data
 @Getter
 @Setter
-public class StockDto {
-    private Long id;
-    private Integer quantity;
+public class PurchaseDto {
+    private Integer quantityPurchased;
+    private Long productId;
+    private BigDecimal price;
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate expiryDate;
-    private BigDecimal price;
-    private String productName;
-    private Long productId;
 }

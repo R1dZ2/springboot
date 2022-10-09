@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
-    Optional<SupplierDto> findSupplierByName(String name);
+    Optional<Supplier> findSupplierByName(String name);
 
-    Optional<SupplierDto> findSupplierByNameAndTelephoneNumber(String name, int telephoneNumber);
+    Optional<Supplier> findSupplierByNameAndTelephoneNumber(String name, int telephoneNumber);
 
-    List<SupplierDto> findSupplierByNameContains(String name);
+    List<Supplier> findSupplierByNameContains(String name);
 
-    List<SupplierDto> findSupplierByEmailAddressContains(String emailAddress);
+    List<Supplier> findSupplierByEmailAddressContains(String emailAddress);
 
 }

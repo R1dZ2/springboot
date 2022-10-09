@@ -1,8 +1,11 @@
 package com.javaguides.springboot.service.implementation;
 
 import com.javaguides.springboot.dto.ProductDto;
+import com.javaguides.springboot.dto.StockDto;
 import com.javaguides.springboot.entity.Product;
+import com.javaguides.springboot.entity.Stock;
 import com.javaguides.springboot.repository.ProductRepository;
+import com.javaguides.springboot.repository.StockRepository;
 import com.javaguides.springboot.repository.SupplierRepository;
 import com.javaguides.springboot.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     private final SupplierRepository supplierRepository;
+
+    private final StockRepository stockRepository;
 
     @Override
     public List<ProductDto> getAllProducts() {
@@ -51,15 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
     // An optional is a container object which may or may not contain null values.
     // This prevents us from getting null pointer if a value we are looking for is not present in the database.
-//    @Override
-//    public void updateProduct(Long id, Product product) {
-//        Optional<Product> optionalProduct = productRepository.findById(id);
-//        optionalProduct.ifPresent(productEntity -> {
-//            productEntity.setName(product.getName());
-//            productEntity.setDescription(product.getDescription());
-//            productRepository.save(productEntity);
-//        });
-//    }
+
     @Override
     public void updateProduct(Long id, ProductDto productDto) {
         Product product = productRepository.findById(id).orElse(null);
@@ -90,6 +87,16 @@ public class ProductServiceImpl implements ProductService {
             productDto.setName(productEntity.getName());
             productDto.setDescription(productEntity.getDescription());
             productDto.setSupplierName(productEntity.getSupplier().getName());
+            List<Stock> stockList = stockRepository.findStockByProduct_Id(id);
+            List<StockDto> stockDtoList = stockList.stream().map(stock -> {
+                StockDto stockDto = new StockDto();
+                stockDto.setId(stock.getId());
+                stockDto.setExpiryDate(stock.getExpiryDate());
+                stockDto.setQuantity(stock.getQuantity());
+                stockDto.setPrice(stock.getPrice());
+                return stockDto;
+            }).collect(Collectors.toList());
+            productDto.setStockDtoList(stockDtoList);
             return productDto;
         } else {
             return null;
@@ -98,7 +105,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> findProductByName(String name) {
-        List<ProductDto> productList = productRepository.findProductByNameContains(name);
-        return productList;
+        List<Product> productList = productRepository.findProductByNameContains(name);
+        List<ProductDto> productDtoList = productList.stream().map(product -> {
+            ProductDto productDto = new ProductDto();
+            productDto.setName(product.getName());
+            productDto.setDescription(product.getDescription());
+            productDto.setSupplierName(product.getSupplier().getName());
+            productDto.setSupplierId(product.getSupplier().getId());
+            productDto.setId(product.getId());
+            return productDto;
+        }).collect(Collectors.toList());
+        return productDtoList;
+    }
+
+    @Override
+    public List<ProductDto> findProductBySupplierName(String supplierName){
+        List<Product> productList=productRepository.findProductBySupplier_Name(supplierName);
+        List<ProductDto> productDtoList = productList.stream().map(product -> {
+            ProductDto productDto = new ProductDto();
+            productDto.setName(product.getName());
+            productDto.setDescription(product.getDescription());
+            productDto.setSupplierName(product.getSupplier().getName());
+            productDto.setSupplierId(product.getSupplier().getId());
+            productDto.setId(product.getId());
+            return productDto;
+        }).collect(Collectors.toList());
+        return productDtoList;
     }
 }
